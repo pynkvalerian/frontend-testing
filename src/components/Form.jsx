@@ -4,10 +4,9 @@ const Form = () => {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const onSubmit = (event) => {
+  const onSubmit = () => {
     setSubmitted(true);
     setName('');
-    event.preventDefault();
   }
 
   const onChangeInput = (event) => {
@@ -16,7 +15,7 @@ const Form = () => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={(event) => event.preventDefault()}>
       <input
         type={'text'}
         name={'firstName'}
@@ -24,7 +23,7 @@ const Form = () => {
         value={name}
         placeholder={'first name'}
         onChange={onChangeInput} />
-      <button type="submit" disabled={submitted}>Submit</button>
+      <button type="submit" onClick={onSubmit} disabled={submitted}>Submit</button>
       {submitted && (
         <p id="submitted-text">submitted</p>
       )}

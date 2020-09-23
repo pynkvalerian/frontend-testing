@@ -4,28 +4,28 @@ import Form from '../components/Form';
 import enzymeConfig from '../enzymeConfig';
 
 describe('<Form>', () => {
+
   it('Should clear input value onSubmit', () => {
-    const component = mount(<Form />);
-    const input = component.find('input').getDOMNode();
-    const button = component.find('button').last();
+    let component = mount(<Form />);
+    const input = component.find('input').at(0);
+    const button = component.find('button').at(0);
 
-    input.value = 'Luna';
+    input.invoke('onChange')({target: {value: 'luna'}})
+    expect(component.find('input').prop('value')).toEqual('luna');
 
-    expect(component.find('input').prop('value')).toEqual('Luna');
-
-    button.simulate('click');
-
+    button.invoke('onClick')();
     expect(component.find('input').prop('value')).toEqual('');
   });
 
   it('Should disable submit button onSubmit', () => {
     const component = mount(<Form />);
-    const input = component.find('input').getDOMNode();
+    const input = component.find('input').at(0);
+    const button = component.find('button').at(0);
 
-    input.value = 'Luna';
+    input.invoke('onChange')({target: {value: 'luna'}})
+    expect(component.find('input').prop('value')).toEqual('luna');
 
-    component.find('button').last().simulate('click');
-
+    button.invoke('onClick')();
     expect(component.find('button').last().prop('disabled')).toBeTruthy();
   });
 })
